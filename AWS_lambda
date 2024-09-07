@@ -1,0 +1,28 @@
+import json
+import boto3
+
+sns = boto3.client('sns')
+
+# Define thresholds for detecting fire
+TEMPERATURE_THRESHOLD = 70  # Example threshold in degrees Celsius
+SMOKE_LEVEL_THRESHOLD = 50  # Example threshold for smoke level
+
+def lambda_handler(event, context):
+    # Extract sensor data
+    sensor_data = json.loads(event['body'])
+    temperature = sensor_data.get('temperature', 0)
+    smoke_level = sensor_data.get('smoke_level', 0)
+
+    # Detect potential fire
+    if temperature > TEMPERATURE_THRESHOLD or smoke_level > SMOKE_LEVEL_THRESHOLD:
+        message = f"Fire detected! Temperature: {temperature}°C, Smoke Level: {smoke_level} ADDRESS: XXX. Fire department has been notified. Please respond immediately"
+        sns.publish(
+            TopicArn='Your-Topic-Arn',
+            Message=message,
+            Subject='Fire Alert'
+        )
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Data processed successfully')
+    }

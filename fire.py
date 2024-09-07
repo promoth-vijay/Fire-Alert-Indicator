@@ -5,12 +5,12 @@ import AWSIoTPythonSDK.MQTTLib as AWSIoTPyMQTT
 
 # MQTT client setup
 
-root_ca_path = "/home/promoth/Documents/Projects/fire indicator/AmazonRootCA1.pem"
-private_key_path = "/home/promoth/Documents/Projects/fire indicator/private.pem.key"
-certificate_path = "/home/promoth/Documents/Projects/fire indicator/devicecert.crt"
+root_ca_path = "your-rootCA-certificate"
+private_key_path = "your-private_key"
+certificate_path = "your-device_certificate"
 
 mqttClient = AWSIoTPyMQTT.AWSIoTMQTTClient("sensorDeviceID")
-mqttClient.configureEndpoint("a4vn01vk1arga-ats.iot.ap-south-1.amazonaws.com", 8883)
+mqttClient.configureEndpoint("Your Endpoint", 8883)
 mqttClient.configureCredentials(root_ca_path, private_key_path, certificate_path)
 
 mqttClient.connect()
